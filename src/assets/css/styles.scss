@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+}
+
+.guests,
+.reservations,
+.rooms,
+.hotels {
+    .float-button {
+        position: fixed;
+        bottom: 3rem;
+        right: 3rem;
+        z-index: 1000;
+    }
+
+    button.rounded-lg {
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+    }
+}

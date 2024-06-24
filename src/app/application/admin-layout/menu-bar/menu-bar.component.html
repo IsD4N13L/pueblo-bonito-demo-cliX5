@@ -1,0 +1,17 @@
+<p-toolbar styleClass="bg-gray-900">
+    <div class="p-toolbar-group-start">
+        <a routerLink="/">
+            <img src="assets/img/PuebloBonito-WhiteLogo.svg" alt="logo" class="p-mr-2" />
+        </a>
+    </div>
+    <div class="p-toolbar-group-end">
+        <p-button label="Hoteles" icon="material-icons-outlined mi-hotel"
+            styleClass="p-button-secondary p-button-text mr-2" [routerLink]="['admin/hotels']"></p-button>
+        <p-button label="Habitaciones" icon="material-icons-outlined mi-meeting-room"
+            styleClass="p-button-secondary p-button-text mr-2" [routerLink]="['admin/rooms']"></p-button>
+        <p-button label="Reservasiones" icon="material-icons-outlined mi-book-online"
+            styleClass="p-button-secondary p-button-text" [routerLink]="['admin/reservations']"></p-button>
+        <p-button label="Huéspedes" icon="material-icons-outlined mi-book-online"
+            styleClass="p-button-secondary p-button-text" [routerLink]="['admin/guests']"></p-button>
+    </div>
+</p-toolbar>

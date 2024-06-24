@@ -1,0 +1,164 @@
+<section class="hotels">
+    <div class="float-button">
+        <p-button icon="material-icons-outlined mi-add" styleClass="p-button-rounded rounded-lg" pTooltip="Nuevo Hotel"
+            (onClick)="newHotel()"></p-button>
+    </div>
+
+    <div class="grid mt-5">
+        <div class="col-12">
+            <h3>Hoteles</h3>
+        </div>
+    </div>
+    <div class="grid mt-5">
+        <div class="col-12">
+            <p-table [value]="hotels" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Acciones</th>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-hotel>
+                    <tr>
+                        <td>
+                            <p-button icon="material-icons-outlined mi-edit" styleClass="p-button-text"
+                                pTooltip="Editar" (onClick)="editHotel(hotel)"></p-button>
+                            <p-button icon="material-icons-outlined mi-delete" styleClass="p-button-text"
+                                pTooltip="Eliminar" (onClick)="deleteHotel(hotel)"></p-button>
+                        </td>
+                        <td>{{ hotel.name }}</td>
+                        <td>{{ hotel.location }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <p-dialog header="Hotel" [(visible)]="showModalHotel" [style]="{width: '70vw'}" [modal]="true" [resizable]="false"
+        [draggable]="false">
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentHotel.name" />
+                    <label for="name">Nombre</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentHotel.location" />
+                    <label for="name">Ubicación</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentHotel.address" />
+                    <label for="name">Dirección</label>
+                </span>
+            </div>
+        </div>
+
+
+        <p-panel header="Habitaciones">
+            <div class="button-container">
+                <div class="float-button-panel">
+                    <p-button icon="material-icons-outlined mi-add" styleClass="p-button-rounded"
+                        pTooltip="Agregar Habitación" (onClick)="newRoom()"></p-button>
+                </div>
+            </div>
+
+            <div class="grid mt-6">
+                <div class="col-12">
+                    <p-table [value]="currentHotel.hotelRooms!" [tableStyle]="{ 'min-width': '50rem' }">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Acciones</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Precio</th>
+                                <th>Número</th>
+                                <th>Piso</th>
+                                <th>Vista al mar</th>
+                                <th>Estado</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-hotelRoom>
+                            <tr>
+                                <td>
+                                    <p-button icon="material-icons-outlined mi-edit" styleClass="p-button-text"
+                                        pTooltip="Editar" (onClick)="editHotelRoom(hotelRoom)"></p-button>
+                                    <p-button icon="material-icons-outlined mi-delete" styleClass="p-button-text"
+                                        pTooltip="Eliminar" (onClick)="deleteHotelRoom(hotelRoom)"></p-button>
+                                </td>
+                                <td>{{ hotelRoom.room.name }}</td>
+                                <td>{{ hotelRoom.room.type }}</td>
+                                <td>{{ hotelRoom.cost | currency :
+                                    'MXN' :
+                                    'symbol'
+                                    : '1.2-2' }}</td>
+                                <td>{{ hotelRoom.number }}</td>
+                                <td>{{ hotelRoom.floor }}</td>
+                                <td>{{ hotelRoom.hasSeaView? 'Si': 'No' }}</td>
+                                <td>{{ hotelRoom.status? 'Activa':'Inactiva' }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+
+        </p-panel>
+
+        <ng-template pTemplate="footer">
+            <p-button (click)="saveHotel()" label="Guardar" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog header="Habitación" [(visible)]="showModalRoom" [style]="{width: '60vw'}" [modal]="true"
+        [resizable]="false" [draggable]="false">
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <p-dropdown styleClass="w-full" [appendTo]="'body'" [options]="rooms"
+                        [(ngModel)]="currentRoom.roomId" placeholder="Selecciona la habitación" optionLabel="name"
+                        optionValue="id" inputId="float-label"></p-dropdown>
+                    <label for="float-label">Habitación</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentRoom.cost" />
+                    <label for="name">Precio</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentRoom.number" />
+                    <label for="name">Número</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentRoom.floor" />
+                    <label for="name">Piso</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <p-checkbox [(ngModel)]="currentRoom.hasSeaView" [binary]="true" inputId="hasSeaView"></p-checkbox>
+                <label for="hasSeaView">Con vista al mar</label>
+            </div>
+            <div class="col-6">
+                <p-checkbox [(ngModel)]="currentRoom.status" [binary]="true" inputId="status"></p-checkbox>
+                <label for="status">Activo</label>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (click)="addHotelRoom()" label="Agregar" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
+</section>

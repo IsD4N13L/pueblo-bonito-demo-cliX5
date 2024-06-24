@@ -1,0 +1,115 @@
+<section class="reservations">
+    <div class="float-button">
+        <p-button icon="material-icons-outlined mi-add" styleClass="p-button-rounded rounded-lg"
+            pTooltip="Nueva Reservación" (onClick)="newReservation()"></p-button>
+    </div>
+
+    <div class="grid mt-5">
+        <div class="col-12">
+            <h3>Reservaciones</h3>
+        </div>
+    </div>
+    <div class="grid mt-5">
+        <div class="col-12">
+            <p-table [value]="reservations" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Acciones</th>
+                        <th>Huésped</th>
+                        <th>Total adultos</th>
+                        <th>Total Niños</th>
+                        <th>Estado</th>
+                        <th>Fecha de llegada</th>
+                        <th>Fecha de Salida</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reservation>
+                    <tr>
+                        <td>
+                            <p-button icon="material-icons-outlined mi-edit" styleClass="p-button-text"
+                                pTooltip="Editar" (onClick)="editReservation(reservation)"></p-button>
+                            <p-button icon="material-icons-outlined mi-delete" styleClass="p-button-text"
+                                pTooltip="Eliminar" (onClick)="deleteReservation(reservation)"></p-button>
+                        </td>
+                        <td>{{ reservation.guest.name + ' ' + reservation.guest.lastName }}</td>
+                        <td>{{ reservation.totalAdults }}</td>
+                        <td>{{ reservation.totalChildren }}</td>
+                        <td>{{ reservation.status? 'Activo' :'Inactivo' }}</td>
+                        <td>{{ reservation.arrivalDateTs | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ reservation.departureDateTs | date: 'dd/MM/yyyy' }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <p-dialog header="Reservación" [(visible)]="showModalReservation" [style]="{width: '60vw'}" [modal]="true"
+        [resizable]="false" [draggable]="false">
+
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <p-dropdown styleClass="w-full" [appendTo]="'body'" [options]="hotels"
+                        [(ngModel)]="currentReservation.hotelId" placeholder="Selecciona el hotel" optionLabel="name"
+                        optionValue="id" inputId="float-label" (onChange)="onChangeHotel($event.value)"></p-dropdown>
+                    <label for="float-label">Hotel</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <p-dropdown styleClass="w-full" [appendTo]="'body'" [options]="hotelRooms"
+                        [(ngModel)]="currentReservation.hotelRoomId" placeholder="Selecciona la habitación"
+                        optionLabel="name" optionValue="id" inputId="float-label"></p-dropdown>
+                    <label for="float-label">Habitación</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <p-calendar appendTo="body" styleClass="w-full" [(ngModel)]="currentReservation.dates"
+                        [dateFormat]="'dd-mm-yy'" [selectionMode]="'range'" [hideOnDateTimeSelect]="true"></p-calendar>
+                    <label for="name">Periodo de estancia</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <p-dropdown styleClass="w-full" [appendTo]="'body'" [options]="guests"
+                        [(ngModel)]="currentReservation.guestId" placeholder="Selecciona el huésped" optionLabel="name"
+                        optionValue="id" inputId="float-label"></p-dropdown>
+                    <label for="float-label">Huésped</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText
+                        [(ngModel)]="currentReservation.totalAdults" />
+                    <label for="name">Total adultos</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText
+                        [(ngModel)]="currentReservation.totalChildren" />
+                    <label for="name">Total niños</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <p-checkbox [(ngModel)]="currentReservation.allInclusive" [binary]="true"
+                    inputId="hasSeaView"></p-checkbox>
+                <label for="hasSeaView">Con vista al mar</label>
+            </div>
+            <div class="col-6">
+                <p-checkbox [(ngModel)]="currentReservation.status" [binary]="true" inputId="status"></p-checkbox>
+                <label for="status">Activo</label>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (click)="saveReservation()" label="Guardar" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
+</section>

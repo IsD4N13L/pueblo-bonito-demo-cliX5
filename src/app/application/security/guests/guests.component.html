@@ -1,0 +1,90 @@
+<section class="guests">
+    <div class="float-button">
+        <p-button icon="material-icons-outlined mi-add" styleClass="p-button-rounded rounded-lg"
+            pTooltip="Nuevo Huésped" (onClick)="newGuest()"></p-button>
+    </div>
+
+    <div class="grid mt-5">
+        <div class="col-12">
+            <h3>Huéspedes</h3>
+        </div>
+    </div>
+    <div class="grid mt-5">
+        <div class="col-12">
+            <p-table [value]="guests" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Acciones</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-guest>
+                    <tr>
+                        <td>
+                            <p-button icon="material-icons-outlined mi-edit" styleClass="p-button-text"
+                                pTooltip="Editar" (onClick)="editGuest(guest)"></p-button>
+                            <p-button icon="material-icons-outlined mi-delete" styleClass="p-button-text"
+                                pTooltip="Eliminar" (onClick)="deleteGuest(guest)"></p-button>
+                        </td>
+                        <td>{{ guest.name }}</td>
+                        <td>{{ guest.lastName }}</td>
+                        <td>{{ guest.email }}</td>
+                        <td>{{ guest.phone }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <p-dialog header="Huésped" [(visible)]="showModalGuest" [style]="{width: '60vw'}" [modal]="true" [resizable]="false"
+        [draggable]="false">
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentGuest.name" />
+                    <label for="name">Nombre</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentGuest.lastName" />
+                    <label for="name">Apellidos</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentGuest.email" />
+                    <label for="name">Correo Electrónico</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentGuest.phone" />
+                    <label for="name">Teléfono</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mt-3">
+            <div class="col-6">
+                <span class="p-float-label">
+                    <input class="w-full" type="text" id="name" pInputText [(ngModel)]="currentGuest.address" />
+                    <label for="name">Dirección</label>
+                </span>
+            </div>
+            <div class="col-6">
+                <span class="p-float-label">
+                    <p-calendar appendTo="body" styleClass="w-full" [(ngModel)]="currentGuest.birthdateTs"></p-calendar>
+                    <label for="name">Fecha de nacimiento</label>
+                </span>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (click)="saveGuest()" label="Guardar" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
+</section>
